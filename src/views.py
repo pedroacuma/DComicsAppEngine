@@ -1,9 +1,7 @@
-from datetime import datetime
 import os
 import webapp2
 import jinja2
 
-from webapp2_extras import sessions
 from google.appengine.ext import db
 from google.appengine.api import users
 from models import Serie, Categoria
@@ -54,9 +52,17 @@ class IndexHandler(BaseHandler):
         user = users.get_current_user()
         logoutUrl = self.getLogout();
         
-        series = Serie.all()
+        categoria = None
+        if self.request.get('categoriaSelected') == '' :
+            series = Serie.all()
+        else :
+            categoriaId =  int(self.request.get('categoriaSelected'))
+            categoria = db.get(db.Key.from_path('Categoria',categoriaId))
+            print(categoriaId)
+            series = categoria.series
+            
         categorias = Categoria.all()
-        self.render_template('index.html', {'listaSeries' : series, 'categorias' : categorias, 'nickname' : user.nickname(), 'logoutUrl' : logoutUrl })
+        self.render_template('index.html', {'listaSeries' : series, 'categorias' : categorias, 'categoriaSelected' : categoria, 'nickname' : user.nickname(), 'logoutUrl' : logoutUrl })
         
     def post(self):
         cat = Categoria(nombre=self.request.get('inputNewCat'), series=[])
@@ -73,15 +79,23 @@ class CrearSerie(BaseHandler):
         self.render_template('newSerie.html', {'categorias' : categorias})
         
     def post(self):   
-        listaCategorias = self.request.get('categoriasInput', allow_multiple=True)
+        listaIDsCategorias = self.request.get('categoriasInput', allow_multiple=True)
+        
+        listaKeysCategorias = []
+        for iden in listaIDsCategorias:
+            idenInt = int(iden)
+            key = db.Key.from_path('Categoria', idenInt)
+            listaKeysCategorias.append(key)
+        
+        for k in listaKeysCategorias:
+            print(k)
+            
         serie = Serie(nombre=self.request.get('inputNombre'),
              autor=self.request.get('inputAutor'),
              descripcion=self.request.get('inputDescripcion'),
-             categorias=listaCategorias)
+             categorias=listaKeysCategorias)
         serie.put()
-        
-        for cat in listaCategorias:
-            
+                    
         return webapp2.redirect('/index')
 
     

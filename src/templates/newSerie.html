@@ -20,7 +20,7 @@
     <label for="categoriasInput">Categorías</label>
     <select multiple class="form-control" name="categoriasInput">
 		{% for categoria in categorias %}
-      	<option value="{{ categoria.key() }}">{{ categoria.nombre}} </option>
+      	<option value="{{ categoria.key().id() }}">{{ categoria.nombre}} </option>
       	{% endfor %} 
     </select>
   </div>

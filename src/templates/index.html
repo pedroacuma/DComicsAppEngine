@@ -12,16 +12,19 @@
 <div align="right">
    <a class="btn btn-primary" href="/newSerie">Crear Serie</a>
 </div>
-<form>
-   <select>
-      <option value="-1">Todas las categorías</option>
+
+<form method="get" action="">
+   <select name="categoriaSelected">
+      <option value="" selected>--Seleccione Categoría</option>
       {% for categoria in categorias %}
-      <option value="{{ categoria.key }}">{{ categoria.nombre}} </option>
+      <option value="{{ categoria.key().id() }}" ">{{ categoria.nombre}} </option>
       {% endfor %} 
    </select>
+	<input class="btn btn-primary" name="seleccionar" type="submit" value="Seleccionar"></button>
+   <h3>Mostrando {{ categoriaSelected.nombre }}</h3>
 </form>
 <div class="table-responsive .table-hover">
-   <form method="post" action="">
+   <form>
       <table id="tabla" class="table table-striped"">
       <thead>
       	<tr>
@@ -36,6 +39,7 @@
       </thead>
       <tbody>
       {% for serie in listaSeries %}
+     
       	<tr>
       		<td> {{ serie.key().id() }} </td>
       		<td> {{ serie.nombre}} </td>
