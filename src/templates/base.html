@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Login DComics</title>
+	
+	<!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    
+    <!-- Personalizado para ciertos elementos -->
+    <link href="static/css/style.css" rel="stylesheet">
+
+    
+    
+</head>
+<body>
+	<!-- Cabecera de la página -->
+	<div class="jumbotron" style="background-color: #39CCCC">
+		<div class="container">
+			<h1> Bienvenido a DComics 	{{ nickname }} </h1>
+			<h2>Tu aplicación para gestión de series de comics</h2>
+		</div>
+	</div> 
+	
+	<div class="container">
+			{% block content %}
+			{% endblock content %}
+	</div>
+</body>
+</html>

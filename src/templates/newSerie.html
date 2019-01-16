@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post" action="">
+  <div class="form-group">
+    <label for="inputNombre">Nombre</label>
+    <input type="text" required="true" class="form-control" name="inputNombre">
+  </div>
+
+  <div class="form-group">
+    <label for="inputAutor">Autor</label>
+    <input name="inputAutor" type="text" required="true" class="form-control" id="inputAutor">
+  </div>
+
+  <div class="form-group">
+    <label for="inputDescripcion">Descripción</label>
+    <textarea class="form-control" name="inputDescripcion" required="true" rows="3"></textarea>
+  </div>
+  	
+  <div class="form-group">
+    <label for="categoriasInput">Categorías</label>
+    <select multiple class="form-control" name="categoriaInput">
+		{% for categoria in categorias %}
+      	<option value="{{ categoria.key().id() }}">{{ categoria.nombre}} </option>
+      	{% endfor %} 
+    </select>
+  </div>
+
+  <button type="submit" value="submit" class="btn btn-success">Crear Serie</button>
+</form>
+
+
+{% endblock content %}   

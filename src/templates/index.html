@@ -1,0 +1,57 @@
+
+{% extends "base.html" %}
+{% block content %}
+<nav class="navbar navbar-light bg-light justify-content-between">
+   <a class="navbar-brand">Índice de Cómics</a>
+   <form class="form-inline" action="" method="post">
+      <input required ="true" name="inputNewCat" class="form-control mr-sm-2" placeholder="Crear Categoría"/>
+      <input class="btn btn-primary" name="crearCategoria" type="submit" value="Crear"></button>
+      <a class="btn btn-danger" style="margin: 5px" href="{{ logoutUrl }}">Cerrar Sesión</a>
+   </form>
+</nav>
+<div align="right">
+   <a class="btn btn-primary" href="/newSerie">Crear Serie</a>
+</div>
+<form>
+   <select>
+      <option value="-1">Todas las categorías</option>
+      {% for categoria in categorias %}
+      <option value="{{ categoria.key }}">{{ categoria.nombre}} </option>
+      {% endfor %} 
+   </select>
+</form>
+<div class="table-responsive .table-hover">
+   <form method="post" action="">
+      <table id="tabla" class="table table-striped"">
+      <thead>
+      	<tr>
+      		<th scope="col"> ID </th>
+      		<th scope="col"> Nombre </th>
+      		<th> Autor </th>
+      		<th> Descripción </th>
+      		<th> Fecha </th>
+      		<th> Editar </th>
+      		<th> Borrar </th>
+      	</tr>
+      </thead>
+      <tbody>
+      {% for serie in series %}
+      	<tr>
+      		<td> {{ serie.key }} </td>
+      		<td> {{ serie.nombre}} </td>
+      		<td> {{ serie.autor}} </td>
+      		<td> {{ serie.descripcion }} </td>
+      		<td> {{ serie.fecha }} </td>
+      		<td> <a class="btn btn-primary" href="/editSerie/{{ serie.key().id() }}">Crear Serie</a> </td>
+      		<td> 
+      		<input type="hidden" name="idSerie" value="{{serie.key()}}">
+      		<input class="btn btn-primary" name="borrarSerie" type="submit" value="Borrar">
+      		</button> </td>
+      	</tr>
+      {% endfor %}
+      </tbody>
+      </table>
+   </form>
+</div>
+{% endblock content %}
+
