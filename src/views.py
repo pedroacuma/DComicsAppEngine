@@ -48,7 +48,9 @@ class LoginHandler(BaseHandler):
 
 class IndexHandler(BaseHandler):
     def get(self):
-        self.checkLogin()
+        if not self.checkLogin():
+             return webapp2.redirect('/')
+
         user = users.get_current_user()
         logoutUrl = self.getLogout();
         
@@ -74,7 +76,8 @@ class IndexHandler(BaseHandler):
 
 class CrearSerie(BaseHandler):
     def get(self):
-        self.checkLogin()
+        if not self.checkLogin():
+            return webapp2.redirect('/')
         categorias = Categoria.all()
         self.render_template('newSerie.html', {'categorias' : categorias})
         
@@ -101,6 +104,8 @@ class CrearSerie(BaseHandler):
     
 class BorrarSerie(BaseHandler):  
     def get(self, idSerie):
+        if not self.checkLogin():
+            return webapp2.redirect('/')
         iden = int(idSerie)
         serie = db.get(db.Key.from_path('Serie', iden))
         db.delete(serie)
