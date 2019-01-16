@@ -37,12 +37,12 @@
       <tbody>
       {% for serie in listaSeries %}
       	<tr>
-      		<td> {{ serie.key }} </td>
+      		<td> {{ serie.key().id() }} </td>
       		<td> {{ serie.nombre}} </td>
       		<td> {{ serie.autor}} </td>
       		<td> {{ serie.descripcion }} </td>
       		<td> {{ serie.fecha }} </td>
-      		<td> <a class="btn btn-primary" href="/editSerie/{{ serie.key().id() }}">Crear Serie</a> </td>
+      		<td> <a class="btn btn-primary" href="/editSerie/{{ serie.key().id() }}">Editar </a> </td>
       		<td> 
       		<input type="hidden" name="idSerie" value="{{serie.key()}}">
       		<input class="btn btn-primary" name="borrarSerie" type="submit" value="Borrar">

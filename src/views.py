@@ -72,13 +72,16 @@ class CrearSerie(BaseHandler):
         categorias = Categoria.all()
         self.render_template('newSerie.html', {'categorias' : categorias})
         
-    def post(self):      
+    def post(self):   
+        listaCategorias = self.request.get('categoriasInput', allow_multiple=True)
         serie = Serie(nombre=self.request.get('inputNombre'),
-                autor=self.request.get('inputAutor'),
-                descripcion=self.request.get('inputDescripcion'),
-                categorias=self.request.POST.getall('categoriasInput'))
+             autor=self.request.get('inputAutor'),
+             descripcion=self.request.get('inputDescripcion'),
+             categorias=listaCategorias)
         serie.put()
-        print(self.request.POST.getall('categoriasInput'))
+        
+        for cat in listaCategorias:
+            
         return webapp2.redirect('/index')
 
     
