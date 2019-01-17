@@ -100,6 +100,19 @@ class CrearSerie(BaseHandler):
                     
         return webapp2.redirect('/index')
 
+class VerSerie(BaseHandler):
+    def get(self, idSerie):
+        if not self.checkLogin():
+            return webapp2.redirect('/')
+        
+        iden = int(idSerie)
+        serie = db.get(db.Key.from_path('Serie', iden))
+        
+        categorias = Categoria.all()
+        self.render_template('serie.html', {'categorias' : categorias, 'serie' : serie })
+
+
+
 class EditarSerie(BaseHandler):
     def get(self, idSerie):
         if not self.checkLogin():

@@ -3,32 +3,29 @@
 <form method="post" action="">
   <div class="form-group">
     <label for="inputNombre">Nombre</label>
-    <input type="text" required="true" class="form-control" name="inputNombre" value="{{ serie.nombre }}">
+    <input type="text" required="true" class="form-control" disabled name="inputNombre" value="{{ serie.nombre }}">
   </div>
 
   <div class="form-group">
     <label for="inputAutor">Autor</label>
-    <input id="autor" name="inputAutor" type="text" required="true" class="form-control" id="inputAutor" value="{{ serie.autor}}">
+    <input name="inputAutor" id="autor" type="text" disabled class="form-control" id="inputAutor" value="{{ serie.autor}}">
   </div>
 
   <div class="form-group">
     <label for="inputDescripcion">Descripción</label>
-    <textarea class="form-control" name="inputDescripcion" required="true" rows="3" >{{ serie.descripcion }}</textarea>
+    <textarea class="form-control" name="inputDescripcion" disabled rows="3" >{{ serie.descripcion }}</textarea>
   </div>
   	
   <div class="form-group">
     <label for="categoriasInput">Categorías</label>
-    <select multiple class="form-control" name="categoriasInput">
+    <select   multiple class="form-control" disabled name="categoriasInput">
 		{% for categoria in categorias %}
-      	<option value="{{ categoria.key().id() }}" {% if (categoria.key() in serie.categorias ) %} selected {% endif %} >
+      	<option value="{{ categoria.key().id() }}"  {% if (categoria.key() in serie.categorias ) %} selected {% endif %} >
       	{{ categoria.nombre }} </option>
       	{% endfor %} 
     </select>
   </div>
-
-  <button type="submit" value="submit" class="btn btn-success">Editar Serie</button>
 </form>
-
 <h2 align="center">Otras series del autor (API Marvel)</h2>
 	<h3 align="center" id="message"> </h3>
         
@@ -37,5 +34,5 @@
     </div>
      <script type="text/javascript" src="/static/js/jquery-3.3.1.min.js"></script>
      <script type="text/javascript" src="/static/js/marvelUtil.js"></script> 
-{% endblock content %}   
+{% endblock content %} 
 
