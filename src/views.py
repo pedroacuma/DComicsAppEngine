@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import webapp2
 import jinja2
@@ -49,7 +50,7 @@ class LoginHandler(BaseHandler):
 class IndexHandler(BaseHandler):
     def get(self):
         if not self.checkLogin():
-             return webapp2.redirect('/')
+            return webapp2.redirect('/')
 
         user = users.get_current_user()
         logoutUrl = self.getLogout();
@@ -89,9 +90,7 @@ class CrearSerie(BaseHandler):
             idenInt = int(iden)
             key = db.Key.from_path('Categoria', idenInt)
             listaKeysCategorias.append(key)
-        
-        for k in listaKeysCategorias:
-            print(k)
+
             
         serie = Serie(nombre=self.request.get('inputNombre'),
              autor=self.request.get('inputAutor'),
@@ -101,6 +100,38 @@ class CrearSerie(BaseHandler):
                     
         return webapp2.redirect('/index')
 
+class EditarSerie(BaseHandler):
+    def get(self, idSerie):
+        if not self.checkLogin():
+            return webapp2.redirect('/')
+        
+        iden = int(idSerie)
+        serie = db.get(db.Key.from_path('Serie', iden))
+        
+        categorias = Categoria.all()
+        self.render_template('editSerie.html', {'categorias' : categorias, 'serie' : serie })
+           
+    def post(self, idSerie):   
+        listaIDsCategorias = self.request.get('categoriasInput', allow_multiple=True)
+        
+        listaKeysCategorias = []
+        for iden in listaIDsCategorias:
+            idenInt = int(iden)
+            key = db.Key.from_path('Categoria', idenInt)
+            listaKeysCategorias.append(key)
+            
+        iden = int(idSerie)
+        serie = db.get(db.Key.from_path('Serie',iden))
+        
+        serie.nombre=self.request.get('inputNombre')
+        serie.autor=self.request.get('inputAutor')
+        serie.descripcion=self.request.get('inputDescripcion')
+        serie.categorias=listaKeysCategorias
+        
+        serie.put() 
+        return webapp2.redirect('/index')
+
+    
     
 class BorrarSerie(BaseHandler):  
     def get(self, idSerie):

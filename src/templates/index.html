@@ -5,26 +5,24 @@
    <a class="navbar-brand">Índice de Cómics</a>
    <form class="form-inline" action="" method="post">
       <input required ="true" name="inputNewCat" class="form-control mr-sm-2" placeholder="Crear Categoría"/>
-      <input class="btn btn-primary" name="crearCategoria" type="submit" value="Crear"></button>
+      <input class="btn btn-primary" name="crearCategoria" type="submit" value="Crear"/>
+      <a class="btn btn-primary" style="margin: 5px" href="/newSerie">Crear Serie</a>
       <a class="btn btn-danger" style="margin: 5px" href="{{ logoutUrl }}">Cerrar Sesión</a>
    </form>
 </nav>
-<div align="right">
-   <a class="btn btn-primary" href="/newSerie">Crear Serie</a>
-</div>
 
 <form method="get" action="">
    <select name="categoriaSelected">
       <option value="" selected>--Seleccione Categoría</option>
       {% for categoria in categorias %}
-      <option value="{{ categoria.key().id() }}" ">{{ categoria.nombre}} </option>
+      <option value="{{ categoria.key().id() }}"  {% if categoriaSelected != None and categoria.key().id() == categoriaSelected.key().id() %} selected {% endif %}>{{ categoria.nombre}} </option>
       {% endfor %} 
    </select>
 	<input class="btn btn-primary" name="seleccionar" type="submit" value="Seleccionar"></button>
-   <h3>Mostrando {{ categoriaSelected.nombre }}</h3>
+   <h3>Mostrando {% if categoriaSelected==None %} Todas las categorías  {% else %} {{categoriaSelected.nombre}} {% endif %} </h3>
 </form>
 <div class="table-responsive .table-hover">
-   <form>
+   <form method="get" action="">
       <table id="tabla" class="table table-striped"">
       <thead>
       	<tr>
@@ -49,7 +47,7 @@
       		<td> <a class="btn btn-primary" href="/editSerie/{{ serie.key().id() }}">Editar </a> </td>
       		<td> 
       		<input type="hidden" name="idSerie" value="{{serie.key()}}">
-      		<input class="btn btn-primary" name="borrarSerie" type="submit" value="Borrar">
+      		<a class="btn btn-primary" href="/deleteSerie/{{ serie.key().id() }}">Borrar </a>
       		</button> </td>
       	</tr>
       {% endfor %}
